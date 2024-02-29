@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HTML Calculator</title>
+
+  <!-- For styling -->
+  <style>
+    table {
+      border: 1px solid black;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input[type="button"] {
+      width: 100%;
+      padding: 20px 40px;
+      background-color: rgb(19, 138, 207);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+    }
+
+    input[type="text"] {
+      padding: 20px 30px;
+      font-size: 24px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      border: 2px solid black;
+    }
+    input[type="result"] {
+      padding: 20px 30px;
+      font-size: 24px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      border: 2px solid black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Create table -->
+  <table id="calcu">
+    <tr>
+      <td colspan="3">
+        <input type="text" id="inputNumber" placeholder="Enter a number for operations">
+        <div id="result"></div>
+      </td>
+      <td><input type="button" value="c"></td>
+    </tr>
+
+    <tr>
+      <td><input type="button" value="1" onclick="appendToInput('1')"></td>
+      <td><input type="button" value="2" onclick="appendToInput('2')"></td>
+      <td><input type="button" value="3" onclick="appendToInput('3')"></td>
+      <td><input type="button" value="/" onclick="appendToInput('/')"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="4" onclick="appendToInput('4')"></td>
+      <td><input type="button" value="5" onclick="appendToInput('5')"></td>
+      <td><input type="button" value="6" onclick="appendToInput('6')"></td>
+      <td><input type="button" value="X" onclick="appendToInput('*')"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="7" onclick="appendToInput('7')"></td>
+      <td><input type="button" value="8" onclick="appendToInput('8')"></td>
+      <td><input type="button" value="9" onclick="appendToInput('9')"></td>
+      <td><input type="button" value="-" onclick="appendToInput('-')"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="0" onclick="appendToInput('0')"></td>
+      <td><input type="button" value="." onclick="appendToInput('.')"></td>
+      <td><input type="button" value="=" onclick="calculateResult()"></td>
+      <td><input type="button" value="+" onclick="appendToInput('+')"></td>
+    </tr>
+    <tr>
+      <td><input type="button" value="Fact" onclick="calculateFactorial()"></td>
+      <td><input type="button" value="Prime" onclick="checkPrime()"></td>
+      <td><input type="button" value="Fibonnaci" onclick="calculateFibonacci()"></td>
+      <td><input type="button" value="Palindrome" onclick="checkPalindrome()"></td>
+    </tr>
+
+  </table>
+  <script>
+    function appendToInput(value) {
+      document.getElementById('inputNumber').value += value;
+    }
+
+    function calculateResult() {
+      var expression = document.getElementById('inputNumber').value;
+      var result;
+      try {
+        result = eval(expression);
+        document.getElementById('result').innerText = 'Result: ' + result;
+      } catch (error) {
+        document.getElementById('result').innerText = 'Error';
+      }
+    }
+
+    function calculateFactorial() {
+      var inputNumber = parseInt(document.getElementById('inputNumber').value);
+      var result = 1;
+
+      for (var i = 1; i <= inputNumber; i++) {
+        result *= i;
+      }
+
+      document.getElementById('result').innerText = 'Factorial of ' + inputNumber + ' is: ' + result;
+    }
+
+    function calculateFibonacci() {
+      var inputNumber = parseInt(document.getElementById('inputNumber').value);
+      var fibSeries = [0, 1];
+
+      for (var i = 2; i <= inputNumber; i++) {
+        fibSeries[i] = fibSeries[i - 1] + fibSeries[i - 2];
+      }
+
+      document.getElementById('result').innerText = 'Fibonacci series up to ' + inputNumber + ' is: ' + fibSeries.join(', ');
+    }
+
+    function checkPrime() {
+      var inputNumber = parseInt(document.getElementById('inputNumber').value);
+      var primes = [];
+
+      for (var i = 2; i <= inputNumber; i++) {
+        var isPrime = true;
+        for (var j = 2; j < i; j++) {
+          if (i % j === 0) {
+            isPrime = false;
+            break;
+          }
+        }
+        if (isPrime) {
+          primes.push(i);
+        }
+      }
+
+      document.getElementById('result').innerText = 'Prime numbers up to ' + inputNumber + ' are: ' + primes.join(', ');
+    }
+
+    function checkPalindrome() {
+      var inputNumber = document.getElementById('inputNumber').value;
+      var reversedNumber = inputNumber.split('').reverse().join('');
+
+      if (inputNumber === reversedNumber) {
+        document.getElementById('result').innerText = inputNumber + ' is a palindrome.';
+      } else {
+        document.getElementById('result').innerText = inputNumber + ' is not a palindrome.';
+      }
+    }
+  </script>
+</body>
+
+</html>
